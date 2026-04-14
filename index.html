@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MalaysiaEscape — Healing Vacation Spots</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-brand" onclick="goPage('home')">Malaysia<em>Escape</em></div>
+  <ul class="nav-links">
+    <li><a onclick="goPage('home')" id="nl-home">Home</a></li>
+    <li><a onclick="goPage('langkawi')" id="nl-langkawi">Langkawi</a></li>
+    <li><a onclick="goPage('cameron')" id="nl-cameron">Cameron Highlands</a></li>
+    <li><a onclick="goPage('redang')" id="nl-redang">Redang Island</a></li>
+    <li><a onclick="goPage('sabah')" id="nl-sabah">Sabah</a></li>
+    <li><a onclick="goPage('penang')" id="nl-penang">Penang</a></li>
+    <li><a onclick="goPage('planner')" id="nl-planner">🧳 Planner</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="Toggle dark mode">🌙</button>
+    <button class="btn-icon" onclick="changeBg()" id="bgBtn" title="Change background">🔥</button>
+  </div>
+  <button class="nav-ham" onclick="toggleDrawer()" id="hamBtn"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <a onclick="goPage('home');closeDrawer()">🏠 Home</a>
+  <a onclick="goPage('langkawi');closeDrawer()">🏝️ Langkawi</a>
+  <a onclick="goPage('cameron');closeDrawer()">⛰️ Cameron Highlands</a>
+  <a onclick="goPage('redang');closeDrawer()">🐠 Redang Island</a>
+  <a onclick="goPage('sabah');closeDrawer()">🏔️ Sabah</a>
+  <a onclick="goPage('penang');closeDrawer()">🍜 Penang</a>
+  <a onclick="goPage('planner');closeDrawer()">🧳 Trip Planner</a>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══ HOME PAGE ══ -->
+<div class="page active" id="page-home">
+  <div class="hero" id="homeHero">
+    <div class="hero-video-wrap">
+      <div class="hero-bg-anim"></div>
+      <div class="hero-slides-bg" id="heroSlides">
+        <div class="hero-slide active" style="background-image:url('https://images.pexels.com/photos/93750/pexels-photo-93750.jpeg')"></div>
+        <div class="hero-slide" style="background-image:url('https://image-tc.galaxy.tf/wiwebp-77oehjbfcav8rbb65k1r5ylp/golden-hour-view-of-penang-bridge-across-still-waters.webp')"></div>
+        <div class="hero-slide" style="background-image:url('https://cdn-imgix.headout.com/media/images/5a015523f20a7777a09f9a22756f88ab-3813-kuala-lumpur-batu-caves-01.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('https://travelthru.com/cdn-cgi/imagedelivery/wZpbJM3t8iED5kIISxeUgQ/a4af85d2-852e-4e2c-530f-5f380852bd00/public')"></div>
+        <div class="hero-slide" style="background-image:url('https://d1bv4heaa2n05k.cloudfront.net/user-images/1471592172446/shutterstock-1220857_main_1471592177732.jpeg')"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge"><div class="badge-dot"></div>Top 5 Healing Escapes in Malaysia</div>
+      <h1>Find Your Peace<br>in <em>Malaysia</em></h1>
+      <p>From emerald highlands to crystal shores — discover the most restorative destinations Malaysia has to offer.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('destinations').scrollIntoView({behavior:'smooth'})">Explore Destinations ↓</button>
+        <button class="btn-ghost" onclick="goPage('langkawi')">Start with Langkawi</button>
+      </div>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
+  </div>
+
+  <!-- WEATHER -->
+  <div class="weather-strip" id="weatherStrip">
+    <div class="weather-item"><span class="weather-icon">⏳</span> Loading live weather...</div>
+  </div>
+
+  <div class="home-section" id="destinations">
+    <div class="home-intro">
+      <div class="reveal-left">
+        <div class="section-eyebrow"><span class="eyebrow-line"></span>Curated for You</div>
+        <h2 class="section-title">5 Places That Will<br>Heal Your Soul</h2>
+        <p class="section-sub">Whether you seek the quiet of misty mountains or the rhythm of waves, Malaysia holds a perfect escape for every weary traveller.</p>
+      </div>
+      <div class="stats-grid reveal-right">
+        <div class="stat-card delay-1"><div class="num">5</div><div class="lbl">Healing Destinations</div></div>
+        <div class="stat-card delay-2"><div class="num">99</div><div class="lbl">Islands in Langkawi</div></div>
+        <div class="stat-card delay-3"><div class="num">14°C</div><div class="lbl">Cameron Cool Temp</div></div>
+        <div class="stat-card delay-4"><div class="num">30m</div><div class="lbl">Redang Sea Visibility</div></div>
+      </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar reveal">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" onclick="filterDests('all',this)"><span class="f-dot"></span>All</button>
+      <button class="filter-btn" onclick="filterDests('beach',this)">🏖️ Beach</button>
+      <button class="filter-btn" onclick="filterDests('mountain',this)">⛰️ Mountain</button>
+      <button class="filter-btn" onclick="filterDests('nature',this)">🌿 Nature</button>
+      <button class="filter-btn" onclick="filterDests('culture',this)">🎨 Culture</button>
+      <button class="filter-btn" onclick="filterDests('budget',this)">💚 Budget-Friendly</button>
+      <button class="filter-btn" onclick="filterDests('luxury',this)">💎 Luxury</button>
+    </div>
+
+    <div class="dest-grid" id="destGrid">
+      <div class="dest-card reveal delay-1" data-tags="beach luxury" onclick="goPage('langkawi')">
+        <div class="add-trip-btn" id="trip-langkawi" onclick="event.stopPropagation();addToTrip('langkawi','Langkawi','🏝️')">＋ Add to Trip</div>
+        <div class="dest-budget-pill">RM150–600/night</div>
+        <img src="https://dimg04.tripcdn.com/images/0M70612000l9wd0y73DD4.jpg" alt="Langkawi" loading="lazy">
+        <div class="dest-card-overlay"></div>
+        <div class="dest-card-body">
+          <div class="dest-tag">🏝️ Island</div>
+          <h3>Langkawi</h3>
+          <p>Duty-free island paradise with white beaches and turquoise Andaman seas.</p>
+          <span class="card-cta">Explore →</span>
+        </div>
+      </div>
+      <div class="dest-card reveal delay-2" data-tags="mountain budget" onclick="goPage('cameron')">
+        <div class="add-trip-btn" id="trip-cameron" onclick="event.stopPropagation();addToTrip('cameron','Cameron Highlands','⛰️')">＋ Add to Trip</div>
+        <div class="dest-budget-pill">RM80–300/night</div>
+        <img src="https://dynamic-media.tacdn.com/media/photo-o/2f/ba/bd/d9/caption.jpg?w=700&h=500&s=1" alt="Cameron Highlands" loading="lazy">
+        <div class="dest-card-overlay"></div>
+        <div class="dest-card-body">
+          <div class="dest-tag">⛰️ Highlands</div>
+          <h3>Cameron Highlands</h3>
+          <p>Rolling tea hills, strawberry farms, and cool misty air at 1,500m.</p>
+          <span class="card-cta">Explore →</span>
+        </div>
+      </div>
+      <div class="dest-card reveal delay-3" data-tags="beach nature luxury" onclick="goPage('redang')">
+        <div class="add-trip-btn" id="trip-redang" onclick="event.stopPropagation();addToTrip('redang','Redang Island','🐠')">＋ Add to Trip</div>
+        <div class="dest-budget-pill">RM200–700/night</div>
+        <img src="https://res.cloudinary.com/ddrzvdb1p/image/upload/f_webp,q_80,c_lfill,w_2000/premier-holidays/resorts/mv97k8p8sbn55gta1u7t.jpg" alt="Redang Island" loading="lazy">
+        <div class="dest-card-overlay"></div>
+        <div class="dest-card-body">
+          <div class="dest-tag">🐠 Marine</div>
+          <h3>Redang Island</h3>
+          <p>Crystal-clear waters and the finest snorkelling in Malaysia.</p>
+          <span class="card-cta">Explore →</span>
+        </div>
+      </div>
+      <div class="dest-card reveal delay-4" data-tags="nature mountain luxury" onclick="goPage('sabah')">
+        <div class="add-trip-btn" id="trip-sabah" onclick="event.stopPropagation();addToTrip('sabah','Sabah','🏔️')">＋ Add to Trip</div>
+        <div class="dest-budget-pill">RM120–500/night</div>
+        <img src="https://media2.thrillophilia.com/images/photos/000/180/582/original/1574240882_Perak.png?width=975&height=600" alt="Sabah" loading="lazy">
+        <div class="dest-card-overlay"></div>
+        <div class="dest-card-body">
+          <div class="dest-tag">🏔️ Nature</div>
+          <h3>Sabah</h3>
+          <p>Wild rainforests, Mount Kinabalu, and rare wildlife encounters.</p>
+          <span class="card-cta">Explore →</span>
+        </div>
+      </div>
+      <div class="dest-card reveal delay-5" data-tags="culture budget beach" onclick="goPage('penang')">
+        <div class="add-trip-btn" id="trip-penang" onclick="event.stopPropagation();addToTrip('penang','Penang','🍜')">＋ Add to Trip</div>
+        <div class="dest-budget-pill">RM80–400/night</div>
+        <img src="https://image-tc.galaxy.tf/wijpeg-9j3ux7drhby0iny1evej1e38j/sunset-at-penang-bridge.jpg?width=1920" alt="Penang" loading="lazy">
+        <div class="dest-card-overlay"></div>
+        <div class="dest-card-body">
+          <div class="dest-tag">🍜 Culture</div>
+          <h3>Penang</h3>
+          <p>Street art, colonial heritage, and Malaysia's ultimate food scene.</p>
+          <span class="card-cta">Explore →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Malaysia<em>Escape</em></div>
+        <p class="footer-desc">Your guide to Malaysia's most healing and restorative travel destinations. Breathe, explore, reconnect.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Destinations</h5>
+        <ul>
+          <li><a onclick="goPage('langkawi')">Langkawi</a></li>
+          <li><a onclick="goPage('cameron')">Cameron Highlands</a></li>
+          <li><a onclick="goPage('redang')">Redang Island</a></li>
+          <li><a onclick="goPage('sabah')">Sabah</a></li>
+          <li><a onclick="goPage('penang')">Penang</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Plan Your Trip</h5>
+        <ul>
+          <li><a onclick="goPage('planner')">🧳 Trip Planner</a></li>
+          <li><a href="https://www.tourism.gov.my" target="_blank">Tourism Malaysia</a></li>
+          <li><a href="https://www.malaysia.travel" target="_blank">Malaysia Travel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MalaysiaEscape — All rights reserved</span>
+      <span>Made with 🌿 for travellers who need to heal</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ══ LANGKAWI PAGE ══ -->
+<div class="page" id="page-langkawi">
+  <div class="dest-hero">
+    <div class="dest-hero-bg" style="background-image:url('https://i.imgur.com/k2cyWim.jpeg')"></div>
+    <div class="dest-hero-content">
+      <div class="dest-badge-pill">🏝️ Kedah, Malaysia</div>
+      <h1>Langkawi</h1>
+      <p class="tagline">A duty-free archipelago of 99 islands draped in ancient rainforest, white sandy shores, and crystal Andaman waters.</p>
+    </div>
+  </div>
+  <div class="dest-content">
+    <div class="quick-info">
+      <div class="qi-item reveal delay-1"><div class="qi-icon">🌤️</div><div class="qi-label">Best Time</div><div class="qi-value">Nov – Apr</div></div>
+      <div class="qi-item reveal delay-2"><div class="qi-icon">✈️</div><div class="qi-label">Airport</div><div class="qi-value">Langkawi Intl</div></div>
+      <div class="qi-item reveal delay-3"><div class="qi-icon">🏷️</div><div class="qi-label">Budget</div><div class="qi-value">RM150–600/night</div></div>
+      <div class="qi-item reveal delay-4"><div class="qi-icon">🌡️</div><div class="qi-label">Temperature</div><div class="qi-value">26–33°C</div></div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'lk-attr')">🗺️ Attractions</button>
+      <button class="tab-btn" onclick="switchTab(this,'lk-hotels')">🏨 Hotels</button>
+      <button class="tab-btn" onclick="switchTab(this,'lk-resto')">🍽️ Restaurants</button>
+      <button class="tab-btn" onclick="switchTab(this,'lk-food')">🥘 Local Food</button>
+      <button class="tab-btn" onclick="switchTab(this,'lk-reviews')">⭐ Reviews</button>
+      <button class="tab-btn" onclick="switchTab(this,'lk-map')">🗺️ Map</button>
+    </div>
+
+    <div class="tab-pane active" id="lk-attr">
+      <div class="attractions-grid">
+        <div class="attr-card reveal delay-1"><img src="https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit19201280gsm/events/2025/10/22/b5546ec4-a586-4a6d-84b2-6b08dc954214-1761083196204-4cd4cd93e49ceeb570ecc9d39f348a68.jpg" loading="lazy" alt="SkyCab"><div class="attr-card-body"><h4>Langkawi SkyCab</h4><p>One of the world's steepest cable cars, soaring 708m above sea level over Mount Mat Cincang with breathtaking jungle and sea views.</p></div></div>
+        <div class="attr-card reveal delay-2"><img src="https://afar.brightspotcdn.com/dims4/default/def9a74/2147483647/strip/true/crop/1166x800+217+0/resize/660x453!/quality/90/?url=https%3A%2F%2Fk3-prod-afar-media.s3.us-west-2.amazonaws.com%2Fbrightspot%2Fe3%2F07%2Fe2845d61d283d4d6496dd5eb00a1%2Foriginal-f069b11ee7cca71315be660838c0daa1.jpg" loading="lazy" alt="Pantai Cenang"><div class="attr-card-body"><h4>Pantai Cenang</h4><p>The island's most popular beach — a long stretch of golden sand lined with cafés, watersports, and glorious sunsets.</p></div></div>
+        <div class="attr-card reveal delay-3"><img src="https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/07/c6/11/1d.jpg" loading="lazy" alt="Kilim"><div class="attr-card-body"><h4>Kilim Geoforest Park</h4><p>A UNESCO Geopark featuring mystical mangroves, limestone caves, and eagle feeding — best explored by boat tour.</p></div></div>
+        <div class="attr-card reveal delay-4"><img src="https://danroundtheworld.com/wp-content/uploads/2024/11/Top-waterfallDurian-Perangin-Waterfall-Langkawi-Malaysia-scaled.jpg" loading="lazy" alt="Waterfall"><div class="attr-card-body"><h4>Durian Perangin Waterfall</h4><p>A hidden jungle gem with 14 cascades tumbling down rocky granite — refreshing and serene, perfect for nature lovers.</p></div></div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="lk-hotels">
+      <h3 class="sub-heading">Hotels in Langkawi</h3>
+      <div class="hotel-filter-row">
+        <span class="hf-label">Filter by tier:</span>
+        <button class="hf-btn active" onclick="filterHotels('all',this,'lk')">All</button>
+        <button class="hf-btn" onclick="filterHotels('budget',this,'lk')">💚 Budget</button>
+        <button class="hf-btn" onclick="filterHotels('mid',this,'lk')">⭐ Mid-Range</button>
+        <button class="hf-btn" onclick="filterHotels('luxury',this,'lk')">💎 Luxury</button>
+        <div class="price-range-wrap">
+          <label>Max: </label>
+          <input type="range" min="200" max="2000" value="2000" step="50" oninput="filterByPrice(this,'lk')">
+          <span class="price-range-val" id="lk-price-val">RM 2,000</span>
+        </div>
+      </div>
+      <div class="hotels-grid" id="lk-hotels-grid">
+        <div class="hotel-card reveal delay-1" data-tier="luxury" data-price="1800">
+          <div class="hotel-img"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/192164762.jpg?k=378f9cffdba66a1b9908dfec4f077f9a9293b227f6fe1ca4dd8a99fb75a3114f&o=" loading="lazy" alt="The Datai"><div class="hotel-badge">⭐ Luxury</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div>
+          <div class="hotel-body">
+            <div class="hotel-stars">★★★★★</div>
+            <h4>The Datai Langkawi</h4>
+            <div class="hotel-loc">📍 Datai Bay, Northwest Langkawi</div>
+            <p>Nested deep in an ancient rainforest by a secluded beach. Overwater villas, pristine private beach, naturalist guides, and Michelin-level dining.</p>
+            <div class="hotel-footer">
+              <div><div class="hotel-price">RM 1,800 <span>/ night</span></div></div>
+              <a href="https://www.thedatai.com" target="_blank" class="hotel-book-btn">Book Now →</a>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card reveal delay-2" data-tier="luxury" data-price="1400">
+          <div class="hotel-img"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/369807789.jpg?k=1adf43f9eef10b67b1436ec03d5117cebe9e14ad9630e146ad83b4757cbb7017&o=" loading="lazy" alt="Four Seasons"><div class="hotel-badge">⭐ Luxury</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div>
+          <div class="hotel-body">
+            <div class="hotel-stars">★★★★★</div>
+            <h4>Four Seasons Resort Langkawi</h4>
+            <div class="hotel-loc">📍 Tanjung Rhu, North Langkawi</div>
+            <p>Moorish-Malay architecture meets world-class luxury. Private villa pavilions, stunning beachfront, award-winning spa.</p>
+            <div class="hotel-footer">
+              <div><div class="hotel-price">RM 1,400 <span>/ night</span></div></div>
+              <a href="https://www.fourseasons.com/langkawi" target="_blank" class="hotel-book-btn">Book Now →</a>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card reveal delay-3" data-tier="mid" data-price="980">
+          <div class="hotel-img"><img src="https://pix8.agoda.net/hotelImages/10446/0/966155661f6eb243188648beb2a40cfa.jpg?ca=7&ce=1&s=1024x768" loading="lazy" alt="The Andaman"><div class="hotel-badge">🌿 Eco-Luxury</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div>
+          <div class="hotel-body">
+            <div class="hotel-stars">★★★★★</div>
+            <h4>The Andaman, a Luxury Collection</h4>
+            <div class="hotel-loc">📍 Datai Bay, Langkawi</div>
+            <p>Surrounded by 10-million-year-old rainforest. Eco-conscious luxury resort with coral restoration diving and rare jungle treks.</p>
+            <div class="hotel-footer">
+              <div><div class="hotel-price">RM 980 <span>/ night</span></div></div>
+              <a href="https://www.marriott.com/en-us/hotels/lgkak-the-andaman-a-luxury-collection-resort-langkawi/overview/" target="_blank" class="hotel-book-btn">Book Now →</a>
+            </div>
+          </div>
+        </div>
+        <div class="hotel-card reveal delay-4" data-tier="budget" data-price="280">
+          <div class="hotel-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweo-dxf1eewTe3upgvrvaslurjTn2TCc0T-JrT_uSa2O6cWPtp6sL7OLKXa_wgEDESBoMbT6fJMulNuKmzjWjfIMtc3oz8vBHhiBFw8C23Rc_ctxp5nNwsE54YvxNR4TKR9w6RKF=s1360-w1360-h1020-rw" loading="lazy" alt="Berjaya"><div class="hotel-badge">💚 Budget Pick</div><div class="hotel-tier-badge budget">💚 Budget</div></div>
+          <div class="hotel-body">
+            <div class="hotel-stars">★★★★</div>
+            <h4>Berjaya Langkawi Resort</h4>
+            <div class="hotel-loc">📍 Karong Berkunci, Langkawi</div>
+            <p>Excellent value chalets nestled among mangroves with sea views. Great beach, pool, water activities and on-site dining at a fraction of luxury prices.</p>
+            <div class="hotel-footer">
+              <div><div class="hotel-price">RM 280 <span>/ night</span></div></div>
+              <a href="https://www.berjayahotel.com/langkawi" target="_blank" class="hotel-book-btn">Book Now →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="lk-resto">
+      <h3 class="sub-heading">Best Restaurants in Langkawi</h3>
+      <div class="resto-grid">
+        <div class="resto-card reveal delay-1"><div class="resto-img"><img src="https://www.welovelangkawi.com/wp-content/uploads/2022/11/The-Pavilion-Restaurant-Langkawi.jpg" loading="lazy"><div class="resto-cuisine">Fine Dining</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★★</span><span class="score">9.2</span></div><h4>The Pavilion at The Datai</h4><p>Contemporary cuisine with local ingredients in an open-air rainforest pavilion with panoramic canopy views.</p><div class="resto-must">Must try: Langkawi lobster</div></div></div>
+        <div class="resto-card reveal delay-2"><div class="resto-img"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepy2HK4FXu6P7wAXPmQO0jSsTn7CpgAfPFRXvvoDx7dsT2HAsxCblRyGAjFguFIGGug4kdriDmm5ufnkQCy0kFlBeVBkOuqXN8abSuwVrgxHuINH1arPj5EYFzfW20K27TMjm1kDA=s1360-w1360-h1020-rw" loading="lazy"><div class="resto-cuisine">Seafood</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.7</span></div><h4>Ikan-Ikan Restaurant</h4><p>The island's most beloved beachfront seafood spot — choose your fresh catch and eat with your feet nearly in the sand.</p><div class="resto-must">Must try: Grilled stingray sambal</div></div></div>
+        <div class="resto-card reveal delay-3"><div class="resto-img"><img src="https://www.champor-champor.com/wp-content/uploads/2015/09/MG_4583-Copy-Large.jpg" loading="lazy"><div class="resto-cuisine">Fusion Malay</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.5</span></div><h4>Champor-Champor Garden</h4><p>A lush, lantern-lit garden restaurant serving creative Asian fusion — ideal for romantic dinners.</p><div class="resto-must">Must try: Duck rendang</div></div></div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="lk-food">
+      <div class="food-grid">
+        <div class="food-card reveal delay-1"><img src="https://t4.ftcdn.net/jpg/02/03/21/43/360_F_203214359_jkjiMX7cBOErIGhtWahKb9v4xuRtZII9.jpg" loading="lazy"><div><h4>Nasi Lemak</h4><p>The national dish — fragrant coconut rice, sambal, anchovies, peanuts, and boiled egg.</p></div></div>
+        <div class="food-card reveal delay-2"><img src="https://static.vecteezy.com/system/resources/thumbnails/046/002/066/small/grilled-fish-cooking-on-a-grill-with-flames-free-photo.jpeg" loading="lazy"><div><h4>Fresh Grilled Seafood</h4><p>Tiger prawns, stingray, and barramundi grilled with spicy sambal by the beach.</p></div></div>
+        <div class="food-card reveal delay-3"><img src="https://images.deliveryhero.io/image/foodpanda/recipes/asam-laksa-recipe-1.jpg" loading="lazy"><div><h4>Asam Laksa</h4><p>Tangy tamarind-based fish soup with thick noodles — a northern Malaysian speciality.</p></div></div>
+        <div class="food-card reveal delay-4"><img src="https://www.mstar.com.my/image/830/553?url=https%3A%2F%2Fapicms.mstar.com.my%2Fuploads%2Fimages%2F2020%2F04%2F24%2F654278.jpg" loading="lazy"><div><h4>Roti Canai</h4><p>Flaky flatbread served with dal and curry — the quintessential Malaysian breakfast.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="lk-reviews">
+      <div class="reviews-section">
+        <h3 class="sub-heading">What Travellers Say</h3>
+        <div class="reviews-grid">
+          <div class="review-card reveal delay-1">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">Langkawi absolutely blew my mind. The Datai rainforest experience was otherworldly — waking up to hornbills calling outside the villa. Nothing compares to this in Southeast Asia.</p>
+            <div class="review-author">
+              <div class="review-avatar av-1">SK</div>
+              <div class="review-author-info"><h5>Sarah K.</h5><span>London, UK · stayed May 2025</span><div class="review-verified">✓ Verified booking</div></div>
+            </div>
+          </div>
+          <div class="review-card reveal delay-2">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">Duty-free was a bonus but the real treasure is Tanjung Rhu at sunrise. We had the entire beach to ourselves. Truly one of the most serene experiences of my life.</p>
+            <div class="review-author">
+              <div class="review-avatar av-2">MT</div>
+              <div class="review-author-info"><h5>Marcus T.</h5><span>Sydney, Australia · stayed March 2025</span><div class="review-verified">✓ Verified booking</div></div>
+            </div>
+          </div>
+          <div class="review-card reveal delay-3">
+            <div class="review-stars">★★★★☆</div>
+            <p class="review-text">Great family trip! Kids loved the cable car and island hopping. Pantai Cenang can get crowded in peak season — go in the morning for the best experience. Seafood is insanely good.</p>
+            <div class="review-author">
+              <div class="review-avatar av-3">PL</div>
+              <div class="review-author-info"><h5>Priya L.</h5><span>Kuala Lumpur, Malaysia · stayed Jan 2026</span><div class="review-verified">✓ Verified booking</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="lk-map">
+      <div class="highlights-grid">
+        <div>
+          <div class="highlight-list">
+            <div class="highlight-card reveal delay-1"><div class="hi-icon">🛒</div><div><h4>Duty-Free Shopping</h4><p>Langkawi is Malaysia's only duty-free island — buy chocolates, alcohol, perfumes at great prices.</p></div></div>
+            <div class="highlight-card reveal delay-2"><div class="hi-icon">🦅</div><div><h4>Brahminy Kite Eagle</h4><p>The island's mascot — spot massive red eagles soaring over Kuah town and the geoforest mangroves.</p></div></div>
+            <div class="highlight-card reveal delay-3"><div class="hi-icon">🚤</div><div><h4>Island Hopping</h4><p>Hop across Dayang Bunting, Singa Besar, and Beras Basah islands by speedboat for a full-day adventure.</p></div></div>
+            <div class="highlight-card reveal delay-4"><div class="hi-icon">🌅</div><div><h4>Sunset at Tanjung Rhu</h4><p>Arguably the most beautiful beach in Langkawi — serene, pristine, and perfect for photographs.</p></div></div>
+          </div>
+          <div class="ext-links">
+            <a href="https://www.malaysia.travel/langkawi" target="_blank" class="ext-link">🌐 Official Tourism Site</a>
+            <a href="https://www.google.com/maps/place/Langkawi" target="_blank" class="ext-link">📍 Google Maps</a>
+          </div>
+        </div>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254437.74791506283!2d99.6044397!3d6.3502654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304b21e1bcc13bb7%3A0xb35eb8c7b1c2f3c6!2sLangkawi%2C%20Kedah!5e0!3m2!1sen!2smy!4v1" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dest-footer"><span>© 2026 MalaysiaEscape</span><span class="back-home" onclick="goPage('home')">← Back to Home</span></div>
+</div>
+
+<!-- ══ CAMERON HIGHLANDS PAGE ══ -->
+<div class="page" id="page-cameron">
+  <div class="dest-hero">
+    <div class="dest-hero-bg" style="background-image:url('https://i.imgur.com/w91xoCz.jpeg')"></div>
+    <div class="dest-hero-content">
+      <div class="dest-badge-pill">⛰️ Pahang, Malaysia</div>
+      <h1>Cameron Highlands</h1>
+      <p class="tagline">Malaysia's most beloved highland escape — emerald tea fields, cool breezes, and a serene pace of life at 1,500m above sea level.</p>
+    </div>
+  </div>
+  <div class="dest-content">
+    <div class="quick-info">
+      <div class="qi-item reveal delay-1"><div class="qi-icon">🌤️</div><div class="qi-label">Best Time</div><div class="qi-value">Mar – Oct</div></div>
+      <div class="qi-item reveal delay-2"><div class="qi-icon">🚌</div><div class="qi-label">From KL</div><div class="qi-value">~3.5 hrs drive</div></div>
+      <div class="qi-item reveal delay-3"><div class="qi-icon">🏷️</div><div class="qi-label">Budget</div><div class="qi-value">RM80–300/night</div></div>
+      <div class="qi-item reveal delay-4"><div class="qi-icon">🌡️</div><div class="qi-label">Temperature</div><div class="qi-value">14–25°C</div></div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'ch-attr')">🗺️ Attractions</button>
+      <button class="tab-btn" onclick="switchTab(this,'ch-hotels')">🏨 Hotels</button>
+      <button class="tab-btn" onclick="switchTab(this,'ch-resto')">🍽️ Restaurants</button>
+      <button class="tab-btn" onclick="switchTab(this,'ch-food')">🥘 Local Food</button>
+      <button class="tab-btn" onclick="switchTab(this,'ch-reviews')">⭐ Reviews</button>
+      <button class="tab-btn" onclick="switchTab(this,'ch-map')">🗺️ Map</button>
+    </div>
+    <div class="tab-pane active" id="ch-attr">
+      <div class="attractions-grid">
+        <div class="attr-card reveal delay-1"><img src="https://www.shutterstock.com/image-photo/cameron-highlands-malaysia-october-1-600nw-2428634581.jpg" loading="lazy"><div class="attr-card-body"><h4>BOH Tea Plantations</h4><p>Walk among endless rows of manicured tea bushes, tour the factory, and sip freshly brewed tea with panoramic valley views.</p></div></div>
+        <div class="attr-card reveal delay-2"><img src="https://www.greenviewgarden.com/wp-content/uploads/2021/04/DSC06851.jpg" loading="lazy"><div class="attr-card-body"><h4>Strawberry Farms</h4><p>Pick your own fresh strawberries straight from the vines — a fun and delicious activity for all ages.</p></div></div>
+        <div class="attr-card reveal delay-3"><img src="https://www.jomjalan.com/wp-content/uploads/2019/03/mossy-forest-tour-1.jpg" loading="lazy"><div class="attr-card-body"><h4>Mossy Forest, Gunung Brinchang</h4><p>At 2,032m, the highest peak you can drive to — a mystical misty forest draped with ancient moss, ferns, and gnarled trees.</p></div></div>
+        <div class="attr-card reveal delay-4"><img src="https://www.holidaygogogo.com/wp-content/uploads/2021/01/img20201123160452-largejpg.jpg" loading="lazy"><div class="attr-card-body"><h4>Lavendar Garden</h4><p>A small garden with lavender & other colourful blooms,plus a cafe and restaurant.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="ch-hotels">
+      <h3 class="sub-heading">Hotels in Cameron Highlands</h3>
+      <div class="hotel-filter-row">
+        <span class="hf-label">Filter by tier:</span>
+        <button class="hf-btn active" onclick="filterHotels('all',this,'ch')">All</button>
+        <button class="hf-btn" onclick="filterHotels('budget',this,'ch')">💚 Budget</button>
+        <button class="hf-btn" onclick="filterHotels('mid',this,'ch')">⭐ Mid-Range</button>
+        <button class="hf-btn" onclick="filterHotels('luxury',this,'ch')">💎 Luxury</button>
+        <div class="price-range-wrap">
+          <label>Max: </label>
+          <input type="range" min="80" max="700" value="700" step="20" oninput="filterByPrice(this,'ch')">
+          <span class="price-range-val" id="ch-price-val">RM 700</span>
+        </div>
+      </div>
+      <div class="hotels-grid" id="ch-hotels-grid">
+        <div class="hotel-card reveal delay-1" data-tier="luxury" data-price="650">
+          <div class="hotel-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/4e/2d/2a/the-cooling-breeze-that.jpg?w=900&h=500&s=1" loading="lazy"><div class="hotel-badge">⭐ Heritage</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div>
+          <div class="hotel-body"><div class="hotel-stars">★★★★★</div><h4>Cameron Highlands Resort</h4><div class="hotel-loc">📍 Tanah Rata</div><p>Colonial-era luxury retreat with Jim Thompson's Bar, manicured gardens, and legendary afternoon tea.</p><div class="hotel-footer"><div class="hotel-price">RM 650 <span>/ night</span></div><a href="https://www.cameronhighlandsresort.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div>
+        </div>
+        <div class="hotel-card reveal delay-2" data-tier="mid" data-price="280">
+          <div class="hotel-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/76/2d/b4/strawberry-park-resort.jpg?w=900&h=500&s=1" loading="lazy"><div class="hotel-badge">🌿 Boutique</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div>
+          <div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>Strawberry Park Resort</h4><div class="hotel-loc">📍 Tanah Rata</div><p>Hillside chalet-style rooms with dramatic jungle views, multiple dining options, and walking trail access.</p><div class="hotel-footer"><div class="hotel-price">RM 280 <span>/ night</span></div><a href="https://www.strawberryparkresorts.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div>
+        </div>
+        <div class="hotel-card reveal delay-3" data-tier="mid" data-price="320">
+          <div class="hotel-img"><img src="https://ik.imgkit.net/3vlqs5axxjf/external/https://www.cfmedia.vfmleonardo.com/imageRepo/1/0/18/839/221/1127353cdmssabrevfm_img_pho_000_nc__522769_Exterior___O.jpg?tr=w-1200%2Cfo-auto" loading="lazy"><div class="hotel-badge">☕ Unique</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div>
+          <div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>The Lakehouse Cameron Highlands</h4><div class="hotel-loc">📍 Ringlet</div><p>Tudor-style country inn beside a peaceful lake. Roaring fireplaces, antique furnishings, romantic dining.</p><div class="hotel-footer"><div class="hotel-price">RM 320 <span>/ night</span></div><a href="https://www.lakehouse.com.my" target="_blank" class="hotel-book-btn">Book Now →</a></div></div>
+        </div>
+        <div class="hotel-card reveal delay-4" data-tier="budget" data-price="120">
+          <div class="hotel-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/60/ed/ec/hotel-de-la-ferns.jpg?w=300&h=-1&s=1" loading="lazy"><div class="hotel-badge">💚 Budget</div><div class="hotel-tier-badge budget">💚 Budget</div></div>
+          <div class="hotel-body"><div class="hotel-stars">★★★</div><h4>Father's Guesthouse</h4><div class="hotel-loc">📍 Brinchang</div><p>A traveller favourite for over 20 years — simple, clean rooms, warm hosts, free jungle trail maps, and communal kitchen. Legendary value.</p><div class="hotel-footer"><div class="hotel-price">RM 120 <span>/ night</span></div><a href="https://www.booking.com/hotel/my/fathers-guesthouse-cameron-highlands.html" target="_blank" class="hotel-book-btn">Book Now →</a></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="ch-resto">
+      <h3 class="sub-heading">Best Restaurants in Cameron Highlands</h3>
+      <div class="resto-grid">
+        <div class="resto-card reveal delay-1"><div class="resto-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/ec/89/66/indoor-restaurant.jpg" loading="lazy"><div class="resto-cuisine">Fine Dining</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★★</span><span class="score">9.1</span></div><h4>The Dining Room, Cameron Highlands Resort</h4><p>Elegant colonial dining with highland-grown vegetables and a legendary afternoon tea set.</p><div class="resto-must">Must try: Afternoon tea with scones</div></div></div>
+        <div class="resto-card reveal delay-2"><div class="resto-img"><img src="https://www.ebfood.com.my/wp-content/uploads/2021/07/DIY-hot-pot.jpg " loading="lazy"><div class="resto-cuisine">Local Steamboat</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.6</span></div><h4>Highland Steamboat Cheese & Grill</h4><p>A beloved local institution — generous highland steamboat with ultra-fresh local vegetables at very reasonable prices.</p><div class="resto-must">Must try: Highland vegetable steamboat</div></div></div>
+        <div class="resto-card reveal delay-3"><div class="resto-img"><img src="https://nurtravelstheworld.wordpress.com/wp-content/uploads/2022/01/80ed9453-d046-4ee9-9694-8cf0c03b5ab4.jpg?w=1024" loading="lazy"><div class="resto-cuisine">Tea House</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.4</span></div><h4>BOH Tea Centre Café</h4><p>Glass walls overlooking green valleys — freshly brewed BOH tea with homemade cakes and sandwiches. Pure highland bliss.</p><div class="resto-must">Must try: BOH milk tea with scones</div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="ch-food">
+      <div class="food-grid">
+        <div class="food-card reveal delay-1"><img src="https://images.says.com/uploads/story_source/source_image/1231843/901c.jpg" loading="lazy"><div><h4>Highland Steamboat</h4><p>The perfect cold-weather meal — a bubbling pot loaded with fresh vegetables, tofu, and seafood.</p></div></div>
+        <div class="food-card reveal delay-2"><img src="https://i0.wp.com/www.lavenderandlovage.com/wp-content/uploads/2021/05/IMG_4416-1.jpeg?resize=980%2C962&ssl=1" loading="lazy"><div><h4>Scones with Tea</h4><p>Cameron's beloved afternoon ritual — warm scones with strawberry jam and clotted cream, paired with BOH highland tea.</p></div></div>
+        <div class="food-card reveal delay-3"><img src="https://theartoffoodandwine.com/wp-content/uploads/2020/07/BBCorn-2.jpg" loading="lazy"><div><h4>Grilled Sweet Corn</h4><p>Cameron's fresh corn is uniquely sweet — grilled over charcoal with butter, a must-try highland snack.</p></div></div>
+        <div class="food-card reveal delay-4"><img src="https://www.allrecipes.com/thmb/MF7yU1MBbRlaT40ogVr-1PgggKc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/222658-frozen-vegetable-stir-fry-4x3-1382-583b53fa0bcd4247920611ad431c14cb.jpg" loading="lazy"><div><h4>Highland Vegetables</h4><p>Ultra-fresh temperate vegetables — broccoli, cauliflower, and asparagus grown in the cool climate.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="ch-reviews">
+      <div class="reviews-section">
+        <h3 class="sub-heading">What Travellers Say</h3>
+        <div class="reviews-grid">
+          <div class="review-card reveal delay-1"><div class="review-stars">★★★★★</div><p class="review-text">The Cameron Highlands Resort afternoon tea is worth every penny. Sitting beside the fireplace with a pot of BOH tea on a rainy afternoon — absolute perfection. Highly recommend the heritage wing rooms.</p><div class="review-author"><div class="review-avatar av-2">JW</div><div class="review-author-info"><h5>James W.</h5><span>Singapore · stayed Oct 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-2"><div class="review-stars">★★★★★</div><p class="review-text">The Mossy Forest walk at Gunung Brinchang was ethereal. Clouds swirling around ancient trees, pitcher plants everywhere. Go early morning before the tour buses arrive. One of Malaysia's true hidden gems.</p><div class="review-author"><div class="review-avatar av-1">AL</div><div class="review-author-info"><h5>Aisha L.</h5><span>Kuala Lumpur, Malaysia · stayed July 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-3"><div class="review-stars">★★★★☆</div><p class="review-text">Budget traveller here — Father's Guesthouse was amazing value. The owners gave us hand-drawn maps of jungle trails nobody else knew about. Steamboat dinner for RM25 at Sri Brinchang was unbeatable.</p><div class="review-author"><div class="review-avatar av-3">RC</div><div class="review-author-info"><h5>Rafael C.</h5><span>Lisbon, Portugal · stayed April 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="ch-map">
+      <div class="highlights-grid">
+        <div>
+          <div class="highlight-list">
+            <div class="highlight-card reveal delay-1"><div class="hi-icon">🍵</div><div><h4>BOH Tea Heritage</h4><p>Established in 1929, BOH is Malaysia's largest tea producer — their Cameron estate is iconic and open for visitors.</p></div></div>
+            <div class="highlight-card reveal delay-2"><div class="hi-icon">🦋</div><div><h4>Butterfly & Insect Farm</h4><p>Home to over 50 butterfly species in a lush enclosure, plus an extensive collection of tropical insects.</p></div></div>
+            <div class="highlight-card reveal delay-3"><div class="hi-icon">🌺</div><div><h4>Rose & Lavender Garden</h4><p>Beautiful terraced flower farms at Kok Lanas — great for photos and for purchasing fresh-cut blooms.</p></div></div>
+            <div class="highlight-card reveal delay-4"><div class="hi-icon">🥾</div><div><h4>Jungle Trekking</h4><p>Over 14 trekking trails crisscross the highlands — from easy walks to challenging routes through primeval rainforest.</p></div></div>
+          </div>
+          <div class="ext-links">
+            <a href="https://www.cameronhighlands.com" target="_blank" class="ext-link">🌐 Tourism Site</a>
+            <a href="https://www.google.com/maps/place/Cameron+Highlands" target="_blank" class="ext-link">📍 Google Maps</a>
+          </div>
+        </div>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127481.83695!2d101.3739!3d4.4693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ce7a56e32efab3%3A0x9a437d21d0c1bf!2sCameron%20Highlands%2C%20Pahang!5e0!3m2!1sen!2smy!4v1" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dest-footer"><span>© 2026 MalaysiaEscape</span><span class="back-home" onclick="goPage('home')">← Back to Home</span></div>
+</div>
+
+<!-- ══ REDANG PAGE ══ -->
+<div class="page" id="page-redang">
+  <div class="dest-hero">
+    <div class="dest-hero-bg" style="background-image:url('https://i.imgur.com/vGJwfzk.jpeg')"></div>
+    <div class="dest-hero-content">
+      <div class="dest-badge-pill">🐠 Terengganu, Malaysia</div>
+      <h1>Redang Island</h1>
+      <p class="tagline">One of Malaysia's nine marine parks — home to impossibly clear water, coral gardens, and the best sea turtle sightings on the east coast.</p>
+    </div>
+  </div>
+  <div class="dest-content">
+    <div class="quick-info">
+      <div class="qi-item reveal delay-1"><div class="qi-icon">🌤️</div><div class="qi-label">Best Time</div><div class="qi-value">Mar – Oct</div></div>
+      <div class="qi-item reveal delay-2"><div class="qi-icon">⛴️</div><div class="qi-label">Ferry from KT</div><div class="qi-value">45-min ferry</div></div>
+      <div class="qi-item reveal delay-3"><div class="qi-icon">🏷️</div><div class="qi-label">Budget</div><div class="qi-value">RM200–700/night</div></div>
+      <div class="qi-item reveal delay-4"><div class="qi-icon">🌡️</div><div class="qi-label">Water Temp</div><div class="qi-value">27–29°C</div></div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'rd-attr')">🗺️ Attractions</button>
+      <button class="tab-btn" onclick="switchTab(this,'rd-hotels')">🏨 Hotels</button>
+      <button class="tab-btn" onclick="switchTab(this,'rd-resto')">🍽️ Restaurants</button>
+      <button class="tab-btn" onclick="switchTab(this,'rd-food')">🥘 Local Food</button>
+      <button class="tab-btn" onclick="switchTab(this,'rd-reviews')">⭐ Reviews</button>
+      <button class="tab-btn" onclick="switchTab(this,'rd-map')">🗺️ Map</button>
+    </div>
+    <div class="tab-pane active" id="rd-attr">
+      <div class="attractions-grid">
+        <div class="attr-card reveal delay-1"><img src="https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/15/73/36/71.jpg" loading="lazy"><div class="attr-card-body"><h4>Snorkelling & Diving</h4><p>Redang's waters boast over 30m visibility — swim among parrotfish, clownfish, and green sea turtles in pristine coral gardens.</p></div></div>
+        <div class="attr-card reveal delay-2"><img src="https://www.govisitredang.com/wp-content/uploads/2014/08/Teluk-Dalam-Beach-Redang.jpg" loading="lazy"><div class="attr-card-body"><h4>Teluk Dalam Beach</h4><p>A powdery white crescent beach with calm shallow waters — ideal for swimming, kayaking, and total relaxation.</p></div></div>
+        <div class="attr-card reveal delay-3"><img src="https://airial.travel/_next/image?url=https%3A%2F%2Fcoinventmediastorage.blob.core.windows.net%2Fmedia-storage-container%2Fgphoto_ChIJy2zWP_p5H2cRndBC9TKZnDk_1.jpg&w=3840&q=70" loading="lazy"><div class="attr-card-body"><h4>Marine Park Visitors Centre</h4><p>Learn about Redang's marine ecosystem, conservation efforts, and sea turtle nesting sites.</p></div></div>
+        <div class="attr-card reveal delay-4"><img src="https://i.shgcdn.com/90489e42-1f95-4eff-8b82-92970e73bda6/-/format/auto/-/preview/3000x3000/-/quality/lighter/" loading="lazy"><div class="attr-card-body"><h4>Night Snorkelling</h4><p>An otherworldly experience — glide over bioluminescent plankton and discover nocturnal sea creatures in phosphorescent water.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="rd-hotels">
+      <h3 class="sub-heading">Resorts in Redang Island</h3>
+      <div class="hotel-filter-row">
+        <span class="hf-label">Filter by tier:</span>
+        <button class="hf-btn active" onclick="filterHotels('all',this,'rd')">All</button>
+        <button class="hf-btn" onclick="filterHotels('budget',this,'rd')">💚 Budget</button>
+        <button class="hf-btn" onclick="filterHotels('mid',this,'rd')">⭐ Mid-Range</button>
+        <button class="hf-btn" onclick="filterHotels('luxury',this,'rd')">💎 Luxury</button>
+      </div>
+      <div class="hotels-grid" id="rd-hotels-grid">
+        <div class="hotel-card reveal delay-1" data-tier="luxury" data-price="820"><div class="hotel-img"><img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_1295/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/no0fmnyjoiikcfsnivdm/[50Off]TheTaarasBeachSpaResortIslandRetreatatRedangIsland.jpg" loading="lazy"><div class="hotel-badge">⭐ Luxury</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div><div class="hotel-body"><div class="hotel-stars">★★★★★</div><h4>The Taaras Beach & Spa Resort</h4><div class="hotel-loc">📍 Teluk Dalam, Redang</div><p>Overwater bungalows, beachfront chalets, world-class spa, and the island's best dive centre.</p><div class="hotel-footer"><div class="hotel-price">RM 820 <span>/ night</span></div><a href="https://www.thetaaras.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-2" data-tier="mid" data-price="380"><div class="hotel-img"><img src="https://pix10.agoda.net/hotelImages/1061054/-1/72a7f3cc8790fdfd485fabd54edc2574.jpg?ce=0&ar=1x1&s=512x384" loading="lazy"><div class="hotel-badge">🌊 Beachfront</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div><div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>Laguna Redang Island Resort</h4><div class="hotel-loc">📍 Teluk Dalam</div><p>Popular mid-range resort with excellent snorkelling packages, beach bar, and night snorkelling tours.</p><div class="hotel-footer"><div class="hotel-price">RM 380 <span>/ night</span></div><a href="https://www.lagunaredang.com.my" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-3" data-tier="budget" data-price="300"><div class="hotel-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/bc/fc/44/coral-redang-island-resort.jpg?w=900&h=500&s=1" loading="lazy"><div class="hotel-badge">🤿 Dive Resort</div><div class="hotel-tier-badge budget">💚 Budget</div></div><div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>Coral Redang Island Resort</h4><div class="hotel-loc">📍 Pasir Panjang</div><p>PADI 5-star dive centre, excellent house reef, affordable all-inclusive packages with meals and snorkelling.</p><div class="hotel-footer"><div class="hotel-price">RM 300 <span>/ night</span></div><a href="https://www.coralredang.com.my" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="rd-resto">
+      <h3 class="sub-heading">Best Restaurants in Redang Island</h3>
+      <div class="resto-grid">
+        <div class="resto-card reveal delay-1"><div class="resto-img"><img src="https://portozante.com/wp-content/uploads/2023/06/club-house-private-restaurant-greece-luxury-hotel-fine-dining-porto-zante-villas-and-spa-zakynthos-island-1367x912.webp" loading="lazy"><div class="resto-cuisine">Beachfront Fine Dining</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★★</span><span class="score">9.0</span></div><h4>The Taaras Restaurant</h4><p>Open-air beachfront setting, fresh seafood with Asian-Mediterranean flair, extensive wine list.</p><div class="resto-must">Must try: Grilled tiger prawns with garlic butter</div></div></div>
+        <div class="resto-card reveal delay-2"><div class="resto-img"><img src="https://img.freepik.com/free-photo/grilled-chicken-wings-flaming-grill-with-grilled-vegetables-barbecue-sauce-with-pepper-seeds-rosemary-salt-top-view-with-copy-space_1150-37780.jpg" loading="lazy"><div class="resto-cuisine">Seafood BBQ</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.5</span></div><h4>Laguna BBQ Deck</h4><p>Nightly open-air barbecue buffet piled high with fresh fish, prawns, squid, and local sides.</p><div class="resto-must">Must try: Whole grilled red snapper</div></div></div>
+        <div class="resto-card reveal delay-3"><div class="resto-img"><img src="https://platselangor.com/assets/images/1744213171_4PMgVTH204.png" loading="lazy"><div class="resto-cuisine">Local Malay</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★</span><span class="score">8.2</span></div><h4>Warung Redang Pak Ali</h4><p>Authentic Terengganu cuisine — nasi dagang, ikan bakar, and keropok lekor made fresh daily.</p><div class="resto-must">Must try: Nasi dagang with tuna curry</div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="rd-food">
+      <div class="food-grid">
+        <div class="food-card reveal delay-1"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirC6nr-7bXqLy_tBUgO4Kq0IrnNGzIciWhJrBHxjvYhZCV2BZTdXrJxDwp8MktK-1s7RGGk-jBIGEXU6NXiChNcSOS3L9DJCvDi2URKiddmVPprYOljxokOOz6DeK1ee62tpeKdB1sTDM-cSz9AdgQlcbMIX1NKNVv-0xxV97WBrZ2lsvaf6ss7ih2/s6000/DSC_3926.JPG" loading="lazy"><div><h4>Seafood BBQ Buffet</h4><p>Most resorts offer nightly BBQ buffets loaded with freshly caught fish, prawns, squid, and local vegetables.</p></div></div>
+        <div class="food-card reveal delay-2"><img src="https://cdn.rasa.my/2023/10/Untitled-design-28.jpg" loading="lazy"><div><h4>Nasi Dagang</h4><p>A Terengganu speciality — glutinous rice in coconut milk served with rich tuna curry, hard-boiled egg, and pickled vegetables.</p></div></div>
+        <div class="food-card reveal delay-3"><img src="https://t3.ftcdn.net/jpg/19/39/67/86/360_F_1939678622_uO7pnWWAubawXFp5MDzrZpsOV64MJiQR.jpg" loading="lazy"><div><h4>Fresh Young Coconut</h4><p>Sip straight from the husk on the beach — the most refreshing tropical drink after a morning of snorkelling.</p></div></div>
+        <div class="food-card reveal delay-4"><img src="https://happydapur.com/wp-content/uploads/2021/11/i-bRDtprj-X5.jpg" loading="lazy"><div><h4>Keropok Lekor</h4><p>Terengganu's iconic fish crackers — chewy or crispy, dipped in sweet chili sauce. A perfect beachside snack.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="rd-reviews">
+      <div class="reviews-section">
+        <h3 class="sub-heading">What Travellers Say</h3>
+        <div class="reviews-grid">
+          <div class="review-card reveal delay-1"><div class="review-stars">★★★★★</div><p class="review-text">The water at Redang is something I genuinely cannot describe. I've dived in Maldives and Thailand but this was different — the turtle we swam with for 20 minutes at Beras Basah was absolutely life-changing.</p><div class="review-author"><div class="review-avatar av-3">OT</div><div class="review-author-info"><h5>Oliver T.</h5><span>Dublin, Ireland · stayed June 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-2"><div class="review-stars">★★★★★</div><p class="review-text">Night snorkelling blew my mind more than any day dive. Bioluminescent plankton glowing with every stroke, a metre-long barracuda gliding past — it's like swimming in outer space. Book The Taaras without hesitation.</p><div class="review-author"><div class="review-avatar av-2">YM</div><div class="review-author-info"><h5>Yuki M.</h5><span>Tokyo, Japan · stayed August 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-3"><div class="review-stars">★★★★☆</div><p class="review-text">Coral Redang is perfect value for divers. The house reef has more life than most sites people pay a premium to reach. The all-inclusive package with 3 dives a day meant we barely left the water. Outstanding staff.</p><div class="review-author"><div class="review-avatar av-1">DP</div><div class="review-author-info"><h5>David P.</h5><span>Melbourne, Australia · stayed May 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="rd-map">
+      <div class="highlights-grid">
+        <div>
+          <div class="highlight-list">
+            <div class="highlight-card reveal delay-1"><div class="hi-icon">🐢</div><div><h4>Sea Turtle Sanctuary</h4><p>Redang is one of Malaysia's most important sea turtle nesting beaches — spot Green and Hawksbill turtles at night (May–Sep).</p></div></div>
+            <div class="highlight-card reveal delay-2"><div class="hi-icon">🌊</div><div><h4>Marine Conservation</h4><p>As a gazetted marine park, all fishing is prohibited — making Redang's underwater life extraordinarily rich.</p></div></div>
+            <div class="highlight-card reveal delay-3"><div class="hi-icon">🤿</div><div><h4>PADI Dive Courses</h4><p>Numerous dive operators offer beginner to advanced PADI certifications with Redang's stunning reef as your classroom.</p></div></div>
+            <div class="highlight-card reveal delay-4"><div class="hi-icon">⭐</div><div><h4>Stargazing</h4><p>Far from light pollution, Redang's skies are among Malaysia's clearest — watch the Milky Way unfold from the beach.</p></div></div>
+          </div>
+          <div class="ext-links">
+            <a href="https://www.malaysia.travel" target="_blank" class="ext-link">🌐 Tourism Site</a>
+            <a href="https://www.google.com/maps/place/Redang+Island" target="_blank" class="ext-link">📍 Google Maps</a>
+          </div>
+        </div>
+        <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63748.12!2d103.0126!3d5.7884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31b6e2a74b527d63%3A0xbac5c3e11a74e11e!2sRedang%20Island!5e0!3m2!1sen!2smy!4v1" allowfullscreen loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </div>
+  <div class="dest-footer"><span>© 2026 MalaysiaEscape</span><span class="back-home" onclick="goPage('home')">← Back to Home</span></div>
+</div>
+
+<!-- ══ SABAH PAGE ══ -->
+<div class="page" id="page-sabah">
+  <div class="dest-hero">
+    <div class="dest-hero-bg" style="background-image:url('https://i.imgur.com/p2POrcd.jpeg')"></div>
+    <div class="dest-hero-content">
+      <div class="dest-badge-pill">🏔️ Borneo, Malaysia</div>
+      <h1>Sabah</h1>
+      <p class="tagline">The land below the wind — towering peaks, pristine coral reefs, ancient rainforests, and encounters with wildlife found nowhere else on Earth.</p>
+    </div>
+  </div>
+  <div class="dest-content">
+    <div class="quick-info">
+      <div class="qi-item reveal delay-1"><div class="qi-icon">🌤️</div><div class="qi-label">Best Time</div><div class="qi-value">Apr – Sep</div></div>
+      <div class="qi-item reveal delay-2"><div class="qi-icon">✈️</div><div class="qi-label">Gateway</div><div class="qi-value">Kota Kinabalu Intl</div></div>
+      <div class="qi-item reveal delay-3"><div class="qi-icon">🏷️</div><div class="qi-label">Budget</div><div class="qi-value">RM120–500/night</div></div>
+      <div class="qi-item reveal delay-4"><div class="qi-icon">🌡️</div><div class="qi-label">Temperature</div><div class="qi-value">24–34°C</div></div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'sb-attr')">🗺️ Attractions</button>
+      <button class="tab-btn" onclick="switchTab(this,'sb-hotels')">🏨 Hotels</button>
+      <button class="tab-btn" onclick="switchTab(this,'sb-resto')">🍽️ Restaurants</button>
+      <button class="tab-btn" onclick="switchTab(this,'sb-food')">🥘 Local Food</button>
+      <button class="tab-btn" onclick="switchTab(this,'sb-reviews')">⭐ Reviews</button>
+      <button class="tab-btn" onclick="switchTab(this,'sb-map')">🗺️ Map</button>
+    </div>
+    <div class="tab-pane active" id="sb-attr">
+      <div class="attractions-grid">
+        <div class="attr-card reveal delay-1"><img src="https://theculturetrip.com/wp-content/uploads/2018/03/shutterstock_433817725.jpg?s=1200x675" loading="lazy"><div class="attr-card-body"><h4>Mount Kinabalu</h4><p>Southeast Asia's highest peak at 4,095m — a UNESCO World Heritage Site and bucket-list summit for trekkers worldwide.</p></div></div>
+        <div class="attr-card reveal delay-2"><img src="https://assets.nst.com.my/images/articles/Sipadan-Water-Village_1706771679.jpg" loading="lazy"><div class="attr-card-body"><h4>Sipadan Island</h4><p>Ranked among the world's top dive sites — walls of barracuda, schools of bumphead parrotfish, and resident hammerhead sharks.</p></div></div>
+        <div class="attr-card reveal delay-3"><img src="https://sandakan.rainforestlodge.com/cdn/shop/files/1a_sepilok-orang-utan-rehabilitation-centre-sandakan-amazing-borneo-1.jpg?v=1708671301" loading="lazy"><div class="attr-card-body"><h4>Sepilok Orangutan Sanctuary</h4><p>Watch Borneo's iconic orangutans at the world-famous rehabilitation centre — an unforgettable wildlife experience.</p></div></div>
+        <div class="attr-card reveal delay-4"><img src="https://sandakan.rainforestlodge.com/cdn/shop/files/DavidKirkland_family-river-cruiseBb.jpg?v=1708681278" loading="lazy"><div class="attr-card-body"><h4>Kinabatangan River Safari</h4><p>Cruise the longest river in Sabah to spot Bornean pygmy elephants, proboscis monkeys, and hornbills.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="sb-hotels">
+      <h3 class="sub-heading">Hotels in Sabah</h3>
+      <div class="hotel-filter-row">
+        <span class="hf-label">Filter by tier:</span>
+        <button class="hf-btn active" onclick="filterHotels('all',this,'sb')">All</button>
+        <button class="hf-btn" onclick="filterHotels('budget',this,'sb')">💚 Budget</button>
+        <button class="hf-btn" onclick="filterHotels('mid',this,'sb')">⭐ Mid-Range</button>
+        <button class="hf-btn" onclick="filterHotels('luxury',this,'sb')">💎 Luxury</button>
+      </div>
+      <div class="hotels-grid" id="sb-hotels-grid">
+        <div class="hotel-card reveal delay-1" data-tier="luxury" data-price="1100"><div class="hotel-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/36/08/0b/gaya-island-resort.jpg?w=900&h=-1&s=1" loading="lazy"><div class="hotel-badge">⭐ Island Luxury</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div><div class="hotel-body"><div class="hotel-stars">★★★★★</div><h4>Gaya Island Resort</h4><div class="hotel-loc">📍 Gaya Island, Tunku Abdul Rahman Park</div><p>Secluded island retreat just 10 minutes from KK city — overwater villas, pristine jungle, exceptional snorkelling.</p><div class="hotel-footer"><div class="hotel-price">RM 1,100 <span>/ night</span></div><a href="https://www.gayaislandresort.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-2" data-tier="mid" data-price="550"><div class="hotel-img"><img src="https://sitecore-cd-imgr.shangri-la.com/MediaFiles/9/B/8/%7B9B87086A-2921-44A4-B2AA-64F361D32B58%7D20240327_TAH_YourShangStory_Overview_1920x940.jpg?width=630&height=480&mode=crop&quality=100&scale=both" loading="lazy"><div class="hotel-badge">🌊 Beachfront</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div><div class="hotel-body"><div class="hotel-stars">★★★★★</div><h4>Shangri-La Tanjung Aru, KK</h4><div class="hotel-loc">📍 Tanjung Aru, Kota Kinabalu</div><p>KK's premier beachfront resort with sprawling gardens, multiple pools, and exceptional sunset views.</p><div class="hotel-footer"><div class="hotel-price">RM 550 <span>/ night</span></div><a href="https://www.shangri-la.com/kotakinabalu/tangjungaruresort/" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-3" data-tier="mid" data-price="720"><div class="hotel-img"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/b4/cd/46/our-lobbies-at-night.jpg?w=900&h=500&s=1" loading="lazy"><div class="hotel-badge">🌿 Eco-Lodge</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div><div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>Sukau Rainforest Lodge</h4><div class="hotel-loc">📍 Kinabatangan River, Sukau</div><p>Southeast Asia's leading eco-lodge on the banks of the Kinabatangan River. Twice-daily wildlife river cruises.</p><div class="hotel-footer"><div class="hotel-price">RM 720 <span>/ night</span></div><a href="https://www.sukau.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-4" data-tier="budget" data-price="150"><div class="hotel-img"><img src="https://media-cdn.tripadvisor.com/media/photo-s/0f/fa/ab/7d/caption.jpg" loading="lazy"><div class="hotel-badge">💚 Budget</div><div class="hotel-tier-badge budget">💚 Budget</div></div><div class="hotel-body"><div class="hotel-stars">★★★</div><h4>Dreamtel Kota Kinabalu</h4><div class="hotel-loc">📍 KK City Centre</div><p>Stylish city boutique hotel right in the heart of KK — great rooftop, well-connected for day trips, excellent value.</p><div class="hotel-footer"><div class="hotel-price">RM 150 <span>/ night</span></div><a href="https://www.booking.com/hotel/my/dreamtel-kota-kinabalu.html" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="sb-resto">
+      <h3 class="sub-heading">Best Restaurants in Sabah</h3>
+      <div class="resto-grid">
+        <div class="resto-card reveal delay-1"><div class="resto-img"><img src="https://kk.kingparkhotel.com.my/wp-content/uploads/2025/02/kk-waterfront-min.png" loading="lazy"><div class="resto-cuisine">Contemporary KK</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★★</span><span class="score">9.1</span></div><h4>Kohinoor Restaurant, KK</h4><p>KK's finest — creative contemporary cuisine drawing from Sabah's extraordinary produce with sea views from the terrace.</p><div class="resto-must">Must try: Hinava cured fish tartare</div></div></div>
+        <div class="resto-card reveal delay-2"><div class="resto-img"><img src="https://daniaexperiences.com/wp-content/uploads/2024/07/img_9821-800x600-1.jpg" loading="lazy"><div class="resto-cuisine">Night Market Seafood</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.8</span></div><h4>KK Filipino Market (Seafood Night Market)</h4><p>Point and pick your catch from tanks and ice trays, have it grilled right next to your table. The most authentic KK experience.</p><div class="resto-must">Must try: BBQ giant prawns</div></div></div>
+        <div class="resto-card reveal delay-3"><div class="resto-img"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjdFOvs5uEFr0h9fLhzhlyuKNRDJi1KZ84BId0_xBZbsJXQsa7rAZ4kqaDtvHj31N7spPv8ZtbiPmaf7avbCtkp-xj3C9XUA0RuO-0raQTsCf4qroUIsZm8KrqFiGhQp0N6J7LFbGaF5FY/s0/Hilton+Kota+Kinabalu+Urban+Kitchen+01.jpg" loading="lazy"><div class="resto-cuisine">Malay Heritage</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★</span><span class="score">8.4</span></div><h4>Urban Kitchen</h4><p> Serves as the all-day dining offering many dishes from International to South East Asian region cuisine.</p><div class="resto-must">Must try: Tuaran Mee dry (kering)</div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="sb-food">
+      <div class="food-grid">
+        <div class="food-card reveal delay-1"><img src="https://www.unileverfoodsolutions.com.my/dam/global-ufs/mcos/SEA/calcmenu/recipes/MY-recipes/fish-&-other-seafood-dishes/hinava/main-header.jpg" loading="lazy"><div><h4>Hinava</h4><p>A Kadazan-Dusun delicacy — raw fish cured in lime juice with ginger, shallots, and bird's eye chilli.</p></div></div>
+        <div class="food-card reveal delay-2"><img src="https://i.redd.it/oz03778dpyl61.jpg" loading="lazy"><div><h4>Tuaran Mee</h4><p>Hand-rolled yellow noodles wok-tossed with egg, char siu pork, and vegetables in a rich savoury sauce.</p></div></div>
+        <div class="food-card reveal delay-3"><img src="https://i0.wp.com/nationalfoods.org/wp-content/uploads/2017/03/National-Dish-of-Brunei-Ambuyatt-with-tempoyak-and-sides.jpg" loading="lazy"><div><h4>Ambuyat</h4><p>A sticky starch made from sago palm — a traditional Borneo staple eaten by dipping into tangy sauces.</p></div></div>
+        <div class="food-card reveal delay-4"><img src="https://www.amazingborneo.com/uploads/images/packages/12/medium/kota_kinabalu_city_night_filipino_market_seafood_amazing_borneo_tours.JPG" loading="lazy"><div><h4>KK Seafood Markets</h4><p>KK's night market is legendary — pick your catch, have it grilled on the spot, and dine by the ocean.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="sb-reviews">
+      <div class="reviews-section">
+        <h3 class="sub-heading">What Travellers Say</h3>
+        <div class="reviews-grid">
+          <div class="review-card reveal delay-1"><div class="review-stars">★★★★★</div><p class="review-text">Sipadan is genuinely one of the top 5 dives in the world. Within 10 minutes of entering the water we were inside a cyclone of 500 barracuda. The hammerheads circling below were just surreal. Book permits months ahead.</p><div class="review-author"><div class="review-avatar av-1">NB</div><div class="review-author-info"><h5>Nina B.</h5><span>Cape Town, South Africa · stayed July 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-2"><div class="review-stars">★★★★★</div><p class="review-text">Sukau Rainforest Lodge changed my life. We saw pygmy elephants wading in the river at dawn from our riverside deck, then proboscis monkeys at dusk. The naturalist guides are exceptional. Worth every ringgit.</p><div class="review-author"><div class="review-avatar av-3">GH</div><div class="review-author-info"><h5>Graham H.</h5><span>Edinburgh, Scotland · stayed September 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-3"><div class="review-stars">★★★★☆</div><p class="review-text">Sepilok Orangutan Centre is worth it even with the crowds. Seeing mothers with babies swinging through the sanctuary will melt your heart. Combine it with Labuk Bay proboscis monkey sanctuary next door.</p><div class="review-author"><div class="review-avatar av-2">FM</div><div class="review-author-info"><h5>Fatima M.</h5><span>Dubai, UAE · stayed June 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="sb-map">
+      <div class="highlights-grid">
+        <div>
+          <div class="highlight-list">
+            <div class="highlight-card reveal delay-1"><div class="hi-icon">🦏</div><div><h4>Borneo's Big 5</h4><p>Sabah is one of the few places to spot all 5 — orangutans, pygmy elephants, proboscis monkeys, sun bears, and clouded leopards.</p></div></div>
+            <div class="highlight-card reveal delay-2"><div class="hi-icon">🌿</div><div><h4>Rainforest Canopy Walk</h4><p>The treetop walkway at Poring Hot Springs brings you face-to-face with Borneo's remarkable forest from above the canopy.</p></div></div>
+            <div class="highlight-card reveal delay-3"><div class="hi-icon">♨️</div><div><h4>Poring Hot Springs</h4><p>Natural sulphurous hot springs in a jungle setting — a perfect post-climb soak after conquering Mount Kinabalu.</p></div></div>
+            <div class="highlight-card reveal delay-4"><div class="hi-icon">🏝️</div><div><h4>Tunku Abdul Rahman Park</h4><p>Five tropical islands just a 15-minute ferry from Kota Kinabalu — snorkel, kayak, and relax on white beaches.</p></div></div>
+          </div>
+          <div class="ext-links">
+            <a href="https://www.sabahtourism.com" target="_blank" class="ext-link">🌐 Sabah Tourism</a>
+            <a href="https://www.google.com/maps/place/Sabah" target="_blank" class="ext-link">📍 Google Maps</a>
+          </div>
+        </div>
+        <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2032671.0!2d116.0753!3d5.9788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x323b6773e5cad4b5%3A0x2ecd6e51ab3f91b!2sSabah!5e0!3m2!1sen!2smy!4v1" allowfullscreen loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </div>
+  <div class="dest-footer"><span>© 2026 MalaysiaEscape</span><span class="back-home" onclick="goPage('home')">← Back to Home</span></div>
+</div>
+
+<!-- ══ PENANG PAGE ══ -->
+<div class="page" id="page-penang">
+  <div class="dest-hero">
+    <div class="dest-hero-bg" style="background-image:url('https://i.imgur.com/sBSGMtw.jpeg')"></div>
+    <div class="dest-hero-content">
+      <div class="dest-badge-pill">🍜 George Town, Malaysia</div>
+      <h1>Penang</h1>
+      <p class="tagline">The Pearl of the Orient — a living UNESCO heritage city where colonial grandeur, vibrant street art, and unbeatable food collide.</p>
+    </div>
+  </div>
+  <div class="dest-content">
+    <div class="quick-info">
+      <div class="qi-item reveal delay-1"><div class="qi-icon">🌤️</div><div class="qi-label">Best Time</div><div class="qi-value">Year-round</div></div>
+      <div class="qi-item reveal delay-2"><div class="qi-icon">✈️</div><div class="qi-label">Airport</div><div class="qi-value">Penang Intl (PEN)</div></div>
+      <div class="qi-item reveal delay-3"><div class="qi-icon">🏷️</div><div class="qi-label">Budget</div><div class="qi-value">RM80–400/night</div></div>
+      <div class="qi-item reveal delay-4"><div class="qi-icon">🌡️</div><div class="qi-label">Temperature</div><div class="qi-value">25–34°C</div></div>
+    </div>
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'pg-attr')">🗺️ Attractions</button>
+      <button class="tab-btn" onclick="switchTab(this,'pg-hotels')">🏨 Hotels</button>
+      <button class="tab-btn" onclick="switchTab(this,'pg-resto')">🍽️ Restaurants</button>
+      <button class="tab-btn" onclick="switchTab(this,'pg-food')">🥘 Local Food</button>
+      <button class="tab-btn" onclick="switchTab(this,'pg-reviews')">⭐ Reviews</button>
+      <button class="tab-btn" onclick="switchTab(this,'pg-map')">🗺️ Map</button>
+    </div>
+    <div class="tab-pane active" id="pg-attr">
+      <div class="attractions-grid">
+        <div class="attr-card reveal delay-1"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/93/54/36/caption.jpg?w=1200&h=1200&s=1" loading="lazy"><div class="attr-card-body"><h4>George Town Heritage Zone</h4><p>A UNESCO World Heritage Site since 2008 — wander lanes of shophouses, clan jetties, mosques, temples, and colonial mansions.</p></div></div>
+        <div class="attr-card reveal delay-2"><img src="https://footloosedev.com/wp-content/uploads/2017/09/penang-graffiti.jpg" loading="lazy"><div class="attr-card-body"><h4>Street Art Trail</h4><p>Ernest Zacharevic's iconic murals transformed Penang into an open-air gallery — interactive, witty, and endlessly photogenic.</p></div></div>
+        <div class="attr-card reveal delay-3"><img src="https://media.licdn.com/dms/image/v2/D5612AQFEdvWAKSssjA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1711006565665?e=2147483647&v=beta&t=MXu_ic_04DeCWxBVZkx-EoxSNb9RgzTFlIPwg20_rUQ"><div class="attr-card-body"><h4>Penang Hill (Bukit Bendera)</h4><p>Ride the funicular to 830m for panoramic views over the island, sea, and mainland — especially magical at sunset.</p></div></div>
+        <div class="attr-card reveal delay-4"><img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/7089/images/647c4e-62-dca-e12d-4c3f2cff0261_Cover_Photo.png" loading="lazy"><div class="attr-card-body"><h4>Kek Lok Si Temple</h4><p>Southeast Asia's largest Buddhist temple — a grand complex of pagodas, statues, and lantern-lit pathways on the hillside.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pg-hotels">
+      <h3 class="sub-heading">Hotels in Penang</h3>
+      <div class="hotel-filter-row">
+        <span class="hf-label">Filter by tier:</span>
+        <button class="hf-btn active" onclick="filterHotels('all',this,'pg')">All</button>
+        <button class="hf-btn" onclick="filterHotels('budget',this,'pg')">💚 Budget</button>
+        <button class="hf-btn" onclick="filterHotels('mid',this,'pg')">⭐ Mid-Range</button>
+        <button class="hf-btn" onclick="filterHotels('luxury',this,'pg')">💎 Luxury</button>
+      </div>
+      <div class="hotels-grid" id="pg-hotels-grid">
+        <div class="hotel-card reveal delay-1" data-tier="luxury" data-price="750"><div class="hotel-img"><img src="https://www.theyumlist.net/wp-content/uploads/2024/01/EO-Penang-Luxury-Heritage-Boutique-Hotel-23.jpeg" loading="lazy"><div class="hotel-badge">⭐ Historic Luxury</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div><div class="hotel-body"><div class="hotel-stars">★★★★★</div><h4>Eastern & Oriental Hotel</h4><div class="hotel-loc">📍 Farquhar Street, George Town</div><p>An 1885 colonial masterpiece that has hosted royalty and Somerset Maugham alike. Sweeping seafront views, butler service.</p><div class="hotel-footer"><div class="hotel-price">RM 750 <span>/ night</span></div><a href="https://www.eohotels.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-2" data-tier="luxury" data-price="680"><div class="hotel-img"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/734285228.jpg?k=37bfdaa9c418aa2c994a9f2cab55cbce0cf37e8ef64327ee27e94d7dae327d81&o=" loading="lazy"><div class="hotel-badge">🎨 Boutique Design</div><div class="hotel-tier-badge luxury">💎 Luxury</div></div><div class="hotel-body"><div class="hotel-stars">★★★★★</div><h4>Macalister Mansion</h4><div class="hotel-loc">📍 Macalister Road, George Town</div><p>A stunning boutique hotel in a restored 1920s colonial mansion — each of 8 rooms designed by different artists.</p><div class="hotel-footer"><div class="hotel-price">RM 680 <span>/ night</span></div><a href="https://www.macalistermansion.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-3" data-tier="mid" data-price="490"><div class="hotel-img"><img src="https://www.imfirstclass.com/resources/story/1425/seven_terraces_4.jpg" loading="lazy"><div class="hotel-badge">🏛️ Heritage</div><div class="hotel-tier-badge mid">⭐ Mid-Range</div></div><div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>Seven Terraces Heritage Hotel</h4><div class="hotel-loc">📍 Stewart Lane, George Town</div><p>Seven beautifully restored 19th-century Straits Eclectic terraces. Antique four-poster beds, lush courtyard gardens.</p><div class="hotel-footer"><div class="hotel-price">RM 490 <span>/ night</span></div><a href="https://www.seventerraces.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+        <div class="hotel-card reveal delay-4" data-tier="budget" data-price="120"><div class="hotel-img"><img src="https://www.theyumlist.net/wp-content/uploads/2019/03/The-Edison-Penang-George-Town.jpg" loading="lazy"><div class="hotel-badge">💚 Hostel Gem</div><div class="hotel-tier-badge budget">💚 Budget</div></div><div class="hotel-body"><div class="hotel-stars">★★★★</div><h4>The Edison George Town</h4><div class="hotel-loc">📍 Love Lane, George Town</div><p>Stylish boutique guesthouse in the heart of the heritage zone. Beautifully restored shophouse, artsy vibe, perfect location for food trails.</p><div class="hotel-footer"><div class="hotel-price">RM 120 <span>/ night</span></div><a href="https://www.theedisongeorgetown.com" target="_blank" class="hotel-book-btn">Book Now →</a></div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pg-resto">
+      <h3 class="sub-heading">Best Restaurants in Penang</h3>
+      <div class="resto-grid">
+        <div class="resto-card reveal delay-1"><div class="resto-img"><img src="https://www.theyumlist.net/wp-content/uploads/2013/10/1885-01.jpg" loading="lazy"><div class="resto-cuisine">Heritage Fine Dining</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★★</span><span class="score">9.3</span></div><h4>1885 at Eastern & Oriental Hotel</h4><p>One of Malaysia's most celebrated restaurants — a grand colonial dining room with masterful Nyonya-European cuisine.</p><div class="resto-must">Must try: Nyonya laksa with lobster</div></div></div>
+        <div class="resto-card reveal delay-2"><div class="resto-img"><img src="https://thumbs.dreamstime.com/b/nasi-kandar-152799561.jpg" loading="lazy"><div class="resto-cuisine">Street Food</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★★</span><span class="score">9.0</span></div><h4>Nasi Kandar Deen Mutiara</h4><p>Penang Nasi Kandar is an iconic Malaysian dish originating from Indian Muslim traders, featuring fluffy rice flooded with a flavorful, complex mixture of aromatic, spicy curries and side dishes, known for its "banjir" (flooding) style</p><div class="resto-must">Must try: Nasi Kandar banjir)</div></div></div>
+        <div class="resto-card reveal delay-3"><div class="resto-img"><img src="https://d16jvv1mxapgw7.cloudfront.net/cover_agl_feb25_202502280924.png" loading="lazy"><div class="resto-cuisine">Nyonya / Peranakan</div></div><div class="resto-body"><div class="resto-rating"><span class="stars">★★★★½</span><span class="score">8.8</span></div><h4>Auntie Gaik Lean's Old School Eatery</h4><p>Traditional Nyonya home-cooking in a heritage shophouse. Four generations of recipes, made the old way.</p><div class="resto-must">Must try: Inchi kabin & otak-otak</div></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pg-food">
+      <div class="food-grid">
+        <div class="food-card reveal delay-1"><img src="https://www.wokandskillet.com/wp-content/uploads/2016/07/Char-Kway-Teow.jpg" loading="lazy"><div><h4>Char Kway Teow</h4><p>Penang's most celebrated dish — flat rice noodles wok-fried with prawns, cockles, egg, and bean sprouts.</p></div></div>
+        <div class="food-card reveal delay-2"><img src="https://www.elmundoeats.com/wp-content/uploads/2024/03/Penang-asam-laksa-in-a-bowl-500x500.jpg" loading="lazy"><div><h4>Penang Asam Laksa</h4><p>Rated one of CNN's World's 50 Best Foods — a tangy, fishy, aromatic soup with thick noodles, cucumber, and pineapple.</p></div></div>
+        <div class="food-card reveal delay-3"><img src="https://mypenang.gov.my/uploads/page/43/images/Penang_FoodLifestyle_FB_Chendol.jpg" loading="lazy"><div><h4>Penang Cendol</h4><p>The legendary shaved ice dessert — green pandan jelly, red beans, and palm sugar over coconut milk and ice.</p></div></div>
+        <div class="food-card reveal delay-4"><img src="https://images.deliveryhero.io/image/fd-my/LH/ua66-listing.jpg" loading="lazy"><div><h4>Nasi Kandar</h4><p>A Penang institution — steamed rice flooded with an array of rich curries, fried chicken, and mixed vegetables.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pg-reviews">
+      <div class="reviews-section">
+        <h3 class="sub-heading">What Travellers Say</h3>
+        <div class="reviews-grid">
+          <div class="review-card reveal delay-1"><div class="review-stars">★★★★★</div><p class="review-text">Penang Asam Laksa from the market in Ayer Itam made me understand what all the fuss is about. This is genuinely one of the most complex, extraordinary things I have ever tasted. I went back three mornings in a row.</p><div class="review-author"><div class="review-avatar av-2">CH</div><div class="review-author-info"><h5>Clara H.</h5><span>Paris, France · stayed February 2026</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-2"><div class="review-stars">★★★★★</div><p class="review-text">The E&O Hotel afternoon tea is a Penang rite of passage. Impeccable service, beautiful colonial setting, views of the sea — and the Nyonya kuih are extraordinary. Pair it with a sunset walk along Esplanade.</p><div class="review-author"><div class="review-avatar av-1">RS</div><div class="review-author-info"><h5>Rajan S.</h5><span>Chennai, India · stayed December 2025</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+          <div class="review-card reveal delay-3"><div class="review-stars">★★★★☆</div><p class="review-text">George Town is endlessly fascinating. The trishaw ride through the clan jetties at dusk, discovering the living community still there — it's one of the most unique urban experiences in all of Asia. Go slow, explore on foot.</p><div class="review-author"><div class="review-avatar av-3">EV</div><div class="review-author-info"><h5>Emma V.</h5><span>Amsterdam, Netherlands · stayed January 2026</span><div class="review-verified">✓ Verified booking</div></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pg-map">
+      <div class="highlights-grid">
+        <div>
+          <div class="highlight-list">
+            <div class="highlight-card reveal delay-1"><div class="hi-icon">🎨</div><div><h4>Street Art Capital</h4><p>George Town has over 100 official murals and interactive iron sculptures scattered through the city — explore on foot.</p></div></div>
+            <div class="highlight-card reveal delay-2"><div class="hi-icon">🕌</div><div><h4>Multi-Cultural Heritage</h4><p>Within walking distance: Sri Mahamariamman Temple, Kapitan Keling Mosque, St. George's Church, and Khoo Kongsi clan house.</p></div></div>
+            <div class="highlight-card reveal delay-3"><div class="hi-icon">🛵</div><div><h4>Trishaw Rides</h4><p>Hop on a flower-decorated trishaw through George Town's lanes — a slow, charming way to take in the heritage architecture.</p></div></div>
+            <div class="highlight-card reveal delay-4"><div class="hi-icon">🌊</div><div><h4>Batu Ferringhi Beach</h4><p>Penang's most popular beach — palm-lined, with a buzzing night market, beachfront resorts, and watersports.</p></div></div>
+          </div>
+          <div class="ext-links">
+            <a href="https://www.visitpenang.gov.my" target="_blank" class="ext-link">🌐 Visit Penang</a>
+            <a href="https://www.google.com/maps/place/Penang" target="_blank" class="ext-link">📍 Google Maps</a>
+          </div>
+        </div>
+        <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d254882.39!2d100.2592!3d5.4141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304ac381a2884de5%3A0xc5b68f66fe7c02f9!2sPenang!5e0!3m2!1sen!2smy!4v1" allowfullscreen loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </div>
+  <div class="dest-footer"><span>© 2026 MalaysiaEscape</span><span class="back-home" onclick="goPage('home')">← Back to Home</span></div>
+</div>
+
+<!-- ══ TRIP PLANNER PAGE ══ -->
+<div class="page" id="page-planner">
+  <div class="planner-page">
+    <div class="planner-hero-text reveal">
+      <div class="section-eyebrow"><span class="eyebrow-line"></span>Your Journey</div>
+      <h1 class="section-title">Build Your Perfect<br><em style="color:var(--gold);font-style:italic;">Malaysia Trip</em></h1>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">Add destinations to your trip planner from any destination page, set your dates, and generate a personalised itinerary.</p>
+    </div>
+    <div class="planner-steps">
+      <div class="planner-step reveal delay-1"><div class="step-num">01</div><h4>Browse Destinations</h4><p>Explore all 5 destinations, read reviews, compare hotels by budget.</p></div>
+      <div class="planner-step reveal delay-2"><div class="step-num">02</div><h4>Add to Planner</h4><p>Click the "＋ Add to Trip" button on any destination card to add it.</p></div>
+      <div class="planner-step reveal delay-3"><div class="step-num">03</div><h4>Set Your Dates</h4><p>Use the trip planner (🧳 icon) to set travel dates for each destination.</p></div>
+      <div class="planner-step reveal delay-4"><div class="step-num">04</div><h4>Plan & Book</h4><p>Use the generated itinerary to book hotels and activities with one click.</p></div>
+    </div>
+    <div id="plannerTripList" style="margin-top:20px;"></div>
+    <div style="text-align:center;margin-top:40px;" class="reveal">
+      <button class="btn-primary" onclick="goPage('home')">← Browse Destinations</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRIP PLANNER FAB -->
+<div class="trip-planner-fab">
+  <button class="trip-fab-btn" onclick="toggleTrip()" title="Your Trip Planner">🧳<span class="trip-count" id="tripCount" style="display:none;">0</span></button>
+</div>
+
+<!-- TRIP WINDOW -->
+<div class="trip-window" id="tripWindow">
+  <div class="trip-header">
+    <div class="trip-header-left"><h4>My Malaysia Trip</h4><span id="tripSummaryHeader">0 destinations planned</span></div>
+    <button class="trip-close" onclick="toggleTrip()">✕</button>
+  </div>
+  <div class="trip-body" id="tripBody">
+    <div class="trip-empty" id="tripEmpty">
+      <div class="trip-empty-icon">🗺️</div>
+      <h5>Your trip planner is empty</h5>
+      <p>Browse destinations and click "＋ Add to Trip" on any card to start building your itinerary.</p>
+    </div>
+  </div>
+  <div class="trip-footer" id="tripFooter" style="display:none;">
+    <p class="trip-summary" id="tripSummaryText"></p>
+    <div class="trip-actions">
+      <button class="trip-btn secondary" onclick="clearTrip()">🗑 Clear All</button>
+      <button class="trip-btn primary" onclick="exportTrip()">📋 Copy Itinerary</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<button class="chat-fab" onclick="toggleChat()" id="chatFab" title="Chat with Malaysia Travel Assistant">
+  🌴<span class="unread" id="chatUnread">1</span>
+</button>
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-avatar">🌴</div>
+    <div class="chat-header-info"><h4>Malaysia Travel Guide</h4><span><span class="chat-online"></span>Online · AI-powered</span></div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMsgs">
+    <div class="msg bot"><div class="msg-avatar">🌴</div><div class="msg-bubble">Hi! 👋 I'm your Malaysia travel assistant. Ask me about any destination, best time to visit, food recommendations, or help planning your trip!</div></div>
+  </div>
+  <div class="chat-quick-btns" id="quickBtns">
+    <button class="quick-btn" onclick="askChat('Best time to visit Langkawi?')">🏝️ Langkawi season?</button>
+    <button class="quick-btn" onclick="askChat('What food must I try in Penang?')">🍜 Penang food?</button>
+    <button class="quick-btn" onclick="askChat('How do I get to Cameron Highlands from KL?')">⛰️ Cameron travel?</button>
+    <button class="quick-btn" onclick="askChat('Is Redang suitable for beginners in snorkelling?')">🐠 Redang diving?</button>
+  </div>
+  <div class="chat-input-wrap">
+    <input class="chat-input" id="chatInput" placeholder="Ask anything about Malaysia travel..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
